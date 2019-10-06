@@ -1,0 +1,42 @@
+.wrapper {
+  display: flex;
+  align-items: center;
+  height: 200px;
+  width: 500px;
+  padding: 40px;
+  border: 10px solid black;
+}
+
+.rect {
+  background: indianred;
+  height: 100px;
+  width: 100px;
+  transform: translateX(0);
+  transition: 2s ease transform;
+}
+
+//css animation via transition
+.animatedTransition {
+  .wrapper:hover & {
+    transform: translateX(500px) translateX(-100%);
+  }
+}
+
+
+//css animation via animation keyframes
+@keyframes rectMovingKeyframes {
+  0% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(500px) translateX(-100%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+.animatedKeyframes {
+  .wrapper:hover & {
+    animation: rectMovingKeyframes 2s ease;
+  }
+}
