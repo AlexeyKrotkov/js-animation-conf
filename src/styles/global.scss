@@ -1,11 +1,17 @@
 html, body {
-  margin: 0;
-  height: 100%;
+  margin-top: 50px;
+  min-height: 100%;
+  font-family: "Open Sans", sans-serif;
 }
 
 .root {
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-flow: column;
   height: 100%;
+}
+
+*, *:before, *:after {
+  box-sizing: border-box;
 }

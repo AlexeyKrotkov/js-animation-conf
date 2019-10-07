@@ -1,10 +1,12 @@
 .wrapper {
   display: flex;
   align-items: center;
+  margin: 0 auto;
   height: 200px;
   width: 500px;
   padding: 40px;
   border: 10px solid black;
+  box-sizing: content-box;
 }
 
 .rect {
@@ -12,7 +14,7 @@
   height: 100px;
   width: 100px;
   transform: translateX(0);
-  transition: 2s ease transform;
+  transition: 1s ease transform;
 }
 
 //css animation via transition
@@ -37,6 +39,6 @@
 }
 .animatedKeyframes {
   .wrapper:hover & {
-    animation: rectMovingKeyframes 2s ease;
+    animation: rectMovingKeyframes 2s ease forwards;
   }
 }
