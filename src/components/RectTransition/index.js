@@ -180,3 +180,86 @@ export default class RectTransition {
 // console.log(endPosition);
 
 // const xPositions = [0, 100, 300, 500, 200, 100];
+
+// 1 - вариант задания ключевых кадров с
+// привязкой к прогрессу
+
+// const myKeyFrames = {
+//   '-100': {
+//     opacity: 0,
+//     x: 0,
+//     y: 0,
+//   },
+//   0: {
+//     opacity: 1,
+//   },
+//   100: {
+//     x: 0,
+//     y: 0,
+//     opacity: 0,
+//   },
+// };
+
+// 2 - вариант задания ключевых кадров с
+// привязкой к прогрессу
+
+// const myKeyFrames2 = [
+//   {
+//     progress: -100,
+//     state: {
+//       opacity: 0,
+//       x: 0,
+//       y: 0,
+//     },
+//   },
+//   {
+//     progress: 0,
+//     state: {
+//       opacity: 1,
+//     },
+//   },
+//   {
+//     progress: 100,
+//     state: {
+//       x: 0,
+//       y: 0,
+//       opacity: 0,
+//     },
+//   },
+// ];
+
+// 3 - вариант задания ключевых кадров с
+// привязкой ко времени
+// (просто оперируем общим временем) до 2000ms
+// const myKeyFrames3 = [
+//   {
+//     time: 0,
+//     state: {
+//       opacity: 0,
+//       x: 0,
+//       y: 0,
+//     },
+//   },
+//   {
+//     time: 500,
+//     state: {
+//       opacity: 1,
+//     },
+//   },
+//   {
+//     time: 2000,
+//     state: {
+//       x: 0,
+//       y: 0,
+//       opacity: 0,
+//     },
+//   },
+// ];
+
+// console.log(myKeyFrames);
+// console.log(myKeyFrames2);
+// console.log(myKeyFrames3);
+//
+// function getAnimationTimeLine(keyframes) {
+//   // ...
+// }
