@@ -15,9 +15,11 @@
   width: 100px;
   transform: translateX(0);
   transition: 1s ease transform;
+  &.withoutAnimation {
+    transition: none;
+  }
 }
 
-//css animation via transition
 .animatedTransition {
   .wrapper:hover & {
     transform: translateX(500px) translateX(-100%);

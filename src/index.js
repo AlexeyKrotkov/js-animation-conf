@@ -47,7 +47,7 @@ const initApp = () => {
     rect.runAnimationsViaTransitionEndCallback();
     const rectNode = rect.getTemplate();
     const rectWithTitleNode = withTitleWrapperView({
-      title: 'Пример 3: цель - такая же, как в примере 2, с использованием JS и transitionend',
+      title: 'Пример 3: цель - переместить квадрат при наведении на блок слева направо и обратно с использованием JS и transitionend',
       subtitle: 'используемый подход: навешиваем слушатель на событие transitionend и проверяя количество срабатываний этого callback изменяем направление движения. Мы не завязываемся на setTimeout'
     })(rectNode);
 
@@ -63,7 +63,7 @@ const initApp = () => {
     rect.runAnimationViaSetTimeoutDelays();
     const rectNode = rect.getTemplate();
     const rectWithTitleNode = withTitleWrapperView({
-      title: 'Пример 4: цель - такая же, как в примере 2, но с использованием двух таймеров c задержкой',
+      title: 'Пример 4: цель - переместить квадрат при наведении на блок слева направо и обратно, но с использованием двух таймеров c задержкой',
       subtitle: 'используемый подход: используем два setTimeout browser callbacks, чтобы изменить направления движения и установить окончание анимации, стараемся точно синхронизировать скорость CSS анимации и браузерных таймеров'
     })(rectNode);
 
@@ -75,12 +75,29 @@ const initApp = () => {
   (() => {
     const rect = new RectTransition({
       containerId,
+      isDisableTransition: true
     });
     rect.runAnimationsViaSetTimeoutLoop();
     const rectNode = rect.getTemplate();
     const rectWithTitleNode = withTitleWrapperView({
-      title: 'Пример 5: цель - такая же, как в примере 2, но с использованием двух таймеров c задержкой',
-      subtitle: 'используемый подход: создаём бесконечную петлю с помощью setTimeout. Вызываем перерисовку снова и снова с минимальной асинхронной задержкой'
+      title: 'Пример 5: цель - переместить квадрат при наведении на блок слева направо используя цикл вызовов через setTimeout',
+      subtitle: 'используемый подход: создаём бесконечную петлю с помощью setTimeout. Планируем событие и выполняем его..'
+    })(rectNode);
+
+    rootContainer.appendChild(rectWithTitleNode);
+    rootContainer.appendChild(new Separator().getTemplate());
+  })();
+  // example 6 - via raf
+  (() => {
+    const rect = new RectTransition({
+      containerId,
+      isDisableTransition: true
+    });
+    rect.runAnimationsViaRafLoop();
+    const rectNode = rect.getTemplate();
+    const rectWithTitleNode = withTitleWrapperView({
+      title: 'Пример 6: цель - переместить квадрат при наведении на блок слева направо используя цикл вызовов через requestAnimationFrame',
+      subtitle: 'используемый подход: создаём бесконечную петлю с помощью requestAnimationFrame. Вызываем перерисовку каждый раз, когда браузер может её обеспечить'
     })(rectNode);
 
     rootContainer.appendChild(rectWithTitleNode);

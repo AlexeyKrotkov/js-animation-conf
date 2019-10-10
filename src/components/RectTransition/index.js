@@ -1,7 +1,8 @@
 import styles from './styles.scss';
 
 export default class RectTransition {
-  constructor() {
+  constructor(props) {
+    this.props = props;
     this.parentNode = null;
     this.rectNode = null;
     // for example 3
@@ -41,7 +42,6 @@ export default class RectTransition {
       this.rectNode.addEventListener('transitionend', this.transitionEndListener);
     }
   };
-
   runAnimationsViaTransitionEndCallback() {
     this.parentNode.addEventListener('mouseenter', this.mouseEnterListener);
   }
@@ -55,7 +55,7 @@ export default class RectTransition {
         this.rectNode.style.transform = 'translateX(0)';
         setTimeout(() => {
           this.isAnimationActive = false;
-        });
+        }, 1000);
       }, 1000);
     }
   };
@@ -64,54 +64,119 @@ export default class RectTransition {
   };
 
   // example 5
-  tickLeft = () => {
-    if (this.xPosition > 0) {
-      this.xPosition -= 1;
-      setTimeout(this.tickLeft, 0);
-      this.rectNode.style.transform = `translateX(${this.xPosition}px)`;
-    } else {
-      this.isLoopAnimationActive = false;
+  tick = () => {
+    this.xPosition += 2;
+    this.rectNode.style.transform = `translateX(${this.xPosition}px)`;
+    if (this.xPosition <= 500 - this.rectNode.getBoundingClientRect().width) {
+      this.timerId = setTimeout(this.tick, 0);
     }
   };
-  tickRight = () => {
-    if (this.xPosition < 500 - this.rectNode.getBoundingClientRect().width) {
-      this.xPosition += 1;
-      this.rectNode.style.transform = `translateX(${this.xPosition}px)`;
-      setTimeout(this.tickRight, 0);
-    } else {
-      this.tickLeft();
-    }
-  };
-  mouseEnterListener3 = e => {
-    if (!this.isLoopAnimationActive) {
-      this.isLoopAnimationActive = true;
-      this.tickRight();
-    }
+  animate = () => {
+    clearTimeout(this.timerId);
+    this.xPosition = 0;
+    this.rectNode.style.transform = `translateX(0)`;
+    setTimeout(this.tick, 0);
   };
   runAnimationsViaSetTimeoutLoop() {
-    this.rectNode.style.transition = "none";
-    this.parentNode.addEventListener('mouseenter', this.mouseEnterListener3);
+    this.parentNode.addEventListener('mouseenter', this.animate);
   }
 
+  // example 6
+  tick2 = () => {
+    this.xPosition += 4;
+    this.rectNode.style.transform = `translateX(${this.xPosition}px)`;
+    if (this.xPosition <= 500 - this.rectNode.getBoundingClientRect().width) {
+      this.rafId = requestAnimationFrame(this.tick2);
+    }
+  };
+  animate2 = () => {
+    cancelAnimationFrame(this.rafId);
+    this.xPosition = 0;
+    this.rectNode.style.transform = `translateX(0)`;
+    requestAnimationFrame(this.tick2);
+  };
   runAnimationsViaRafLoop() {
-
-  }
-
-  runAnimationsViaTweenMaxLibrary() {
-
+    this.parentNode.addEventListener('mouseenter', this.animate2);
   }
 
   initialize() {
     this.parentNode = document.createElement('div');
     this.parentNode.classList.add(styles.wrapper);
     this.rectNode = document.createElement('div');
+    this.rectNode2 = document.createElement('div');
     this.rectNode.classList.add(styles.rect);
+    if (this.props.isDisableTransition) {
+      this.rectNode.classList.add(styles.withoutAnimation);
+    }
     // **
     this.parentNode.appendChild(this.rectNode);
+    this.parentNode.appendChild(this.rectNode2);
   }
 
   getTemplate = () => {
     return this.parentNode;
-  }
-
+  };
 }
+
+// function animateFromStartToEnd(start, end) {
+//   // ...
+// }
+//
+// function animateFromStartToEnd(start, end, callbackAnimationEnd) {
+//   // ...
+// }
+//
+// // полагаем, что знаем начальную позицию
+// function animateToPoint(x, endAnimation) {
+//   // ...
+// }
+//
+// animateToPoint(10, () =>
+//   animateToPoint(230, () => animateToPoint(110, () => animateToPoint(50, () => animateToPoint(20)))),
+// );
+//
+// const xPositions = [10, 230, 110, 50, 20];
+//
+// const stylesStart = { x: 0, y: 0, scale: 1, opacity: 1 };
+// // => { transform: translate(0, 0) scale(1), opacity: 1}
+// const stylesEnd = { x: 100, y: 200, scale: 1.2, opacity: 0 };
+// // => { transform: translate(0, 0) scale(1), opacity: 0}
+//
+// // frames - набор ключевых кадров с параметрами времени и интерполяции
+// function getTimeLine(frames) {
+//   // ...
+// }
+// const nextFrameByTime = getTimeLine([
+//   { x: 0, y: 0, time: 200, interpolation: 'ease' },
+//   { x: 100, y: 200, time: 300, interpolation: 'linear' },
+//   { x: 400, y: 500, time: 400, interpolation: 'ease-in-out' },
+// ]);
+// // общее время прохождения timeline = 900 ms
+//
+//
+// nextFrameByTime(0); // => {x: 0, y: 0} // начальная точка
+// nextFrameByTime(56); // => {x: 33, y: 45} // какая-то промежуточная точка
+// nextFrameByTime(1000); // => {x: 400, y: 500} // конечная точка
+//
+// // => { transform: translate(0, 0) scale(1), opacity: 1}
+// const keyframe0 = { x: 0, y: 0 };
+// const keyframe1 = { x: 100, y: 200 };
+// const timeBetween = 300;
+// // => { transform: translate(0, 0) scale(1), opacity: 0}
+// console.log(keyframe0);
+// console.log(keyframe1);
+// console.log(timeBetween);
+//
+// console.log(stylesStart);
+// console.log(stylesEnd);
+//
+// console.log(xPositions);
+// animateFromStartToEnd();
+//
+// const startPosition = '0px';
+// const endPosition = '100px';
+//
+// console.log(startPosition);
+// console.log(endPosition);
+
+// const xPositions = [0, 100, 300, 500, 200, 100];
