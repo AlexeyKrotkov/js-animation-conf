@@ -1,7 +1,10 @@
 html, body {
   margin-top: 50px;
   min-height: 100%;
+  padding: 20px;
   font-family: "Open Sans", sans-serif;
+  background: rgb(40, 44, 52);
+  color: rgb(204, 236, 255);
 }
 
 .root {
@@ -9,7 +12,9 @@ html, body {
   align-items: center;
   justify-content: center;
   flex-flow: column;
+  margin: auto;
   height: 100%;
+  max-width: 1280px;
 }
 
 *, *:before, *:after {

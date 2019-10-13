@@ -1,0 +1,72 @@
+.wrapper {
+  display: flex;
+  align-items: center;
+  margin: 0 auto;
+  min-height: 200px;
+  width: 500px;
+  padding: 40px;
+  border: 10px solid rgb(64, 186, 210);
+  box-sizing: content-box;
+}
+
+.rect {
+  margin: 20px 0;
+  height: 100px;
+  width: 100px;
+  transform: translateX(0);
+  border-radius: 100%;
+  &.first {
+    background: indianred;
+  }
+  &.second {
+    background: dodgerblue;
+  }
+  &.third {
+    background: greenyellow;
+  }
+  &.fourth {
+    background: cadetblue;
+  }
+  &.fifth {
+    background: #ce97ff;
+  }
+  &.sixth {
+    background: #21ad49;
+  }
+}
+
+.animatedTransition {
+  transition: 1s ease transform;
+  .wrapper:hover & {
+    transform: translateX(500px) translateX(-100%);
+  }
+}
+
+
+//css animation via animation keyframes
+@keyframes rectMovingKeyframes {
+  0% {
+    transform: translate(0, 50px) scale(0.7);
+    background: dodgerblue;
+  }
+  25% {
+    transform: translate(100px, -50px) scale(0.4);
+    background: white;
+  }
+  50% {
+    transform: translate(300px, 40px) scale(1) rotateZ(0);
+    background: dodgerblue;
+    border-radius: 100px;
+  }
+  100% {
+    background: indianred;
+    border-radius: 0px;
+    transform: translate(350px, 0) scale(1.5) rotateZ(135deg);
+  }
+}
+.animatedKeyframes {
+  transform: translate(0, 50px) scale(0.7);
+  .wrapper:hover & {
+    animation: rectMovingKeyframes 2s ease forwards;
+  }
+}

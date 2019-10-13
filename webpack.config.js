@@ -52,10 +52,10 @@ module.exports = (env, argv) => ({
             loader: 'file-loader',
             options: {
               name: '[name].[ext]',
-              outputPath: 'fonts/'
-            }
-          }
-        ]
+              outputPath: 'fonts/',
+            },
+          },
+        ],
       },
       {
         test: /\.s?css$/,
@@ -65,18 +65,24 @@ module.exports = (env, argv) => ({
             use: [
               MiniCssExtractPlugin.loader,
               {
-                loader: "css-loader",
-                options: { modules: true, importLoaders: 2 }
+                loader: 'css-loader',
+
+                options: {
+                  modules: {
+                    localIdentName: '[local]--[hash:base64:5]',
+                  },
+                  importLoaders: 2,
+                },
               },
-              "postcss-loader",
-              "sass-loader"
-            ]
+              'postcss-loader',
+              'sass-loader',
+            ],
           },
           {
-            use: [MiniCssExtractPlugin.loader, "css-loader", "postcss-loader", "sass-loader"]
-          }
-        ]
-      }
+            use: [MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader', 'sass-loader'],
+          },
+        ],
+      },
     ],
   },
   plugins: [

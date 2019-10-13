@@ -1,9 +1,8 @@
-import styles from './styles.scss';
-
-export default class RectTransition {
+export default class NodeAnimator {
   constructor(props) {
     this.props = props;
-    this.parentNode = null;
+    this.props.classNames = props.classNames || [];
+    this.props.parentNode = null;
     this.rectNode = null;
     // for example 3
     this.transitionActions = 0;
@@ -15,16 +14,6 @@ export default class RectTransition {
     this.direction = 'right';
     this.initialize();
   }
-
-  // example 1
-  runAnimationsViaCSSTransition = () => {
-    this.rectNode.classList.add(styles.animatedTransition);
-  };
-
-  // example 2
-  runAnimationsViaCSSAnimationKeyframes = () => {
-    this.rectNode.classList.add(styles.animatedKeyframes);
-  };
 
   // example 3
   transitionEndListener = () => {
@@ -43,7 +32,7 @@ export default class RectTransition {
     }
   };
   runAnimationsViaTransitionEndCallback() {
-    this.parentNode.addEventListener('mouseenter', this.mouseEnterListener);
+    this.props.parentNode.addEventListener('mouseenter', this.mouseEnterListener);
   }
 
   // example 4
@@ -60,7 +49,7 @@ export default class RectTransition {
     }
   };
   runAnimationViaSetTimeoutDelays = () => {
-    this.parentNode.addEventListener('mouseenter', this.mouseEnterListener2);
+    this.props.parentNode.addEventListener('mouseenter', this.mouseEnterListener2);
   };
 
   // example 5
@@ -78,7 +67,7 @@ export default class RectTransition {
     setTimeout(this.tick, 0);
   };
   runAnimationsViaSetTimeoutLoop() {
-    this.parentNode.addEventListener('mouseenter', this.animate);
+    this.props.parentNode.addEventListener('mouseenter', this.animate);
   }
 
   // example 6
@@ -96,27 +85,28 @@ export default class RectTransition {
     requestAnimationFrame(this.tick2);
   };
   runAnimationsViaRafLoop() {
-    this.parentNode.addEventListener('mouseenter', this.animate2);
+    this.props.parentNode.addEventListener('mouseenter', this.animate2);
   }
 
   initialize() {
-    this.parentNode = document.createElement('div');
-    this.parentNode.classList.add(styles.wrapper);
+    this.props.parentNode = document.createElement('div');
     this.rectNode = document.createElement('div');
-    this.rectNode2 = document.createElement('div');
-    this.rectNode.classList.add(styles.rect);
-    if (this.props.isDisableTransition) {
-      this.rectNode.classList.add(styles.withoutAnimation);
-    }
-    // **
-    this.parentNode.appendChild(this.rectNode);
-    this.parentNode.appendChild(this.rectNode2);
+    this.props.classNames.forEach(className => {
+      this.rectNode.classList.add(className);
+    });
+    this.props.parentNode.appendChild(this.rectNode);
+  }
+
+  setParentNode(node) {
+    this.props.parentNode = node;
   }
 
   getTemplate = () => {
-    return this.parentNode;
+    return this.props.parentNode;
   };
 }
+
+// Примеры далее нужны были для презентации и создания скриншотов с правильным синтаксисом
 
 // function animateFromStartToEnd(start, end) {
 //   // ...
@@ -142,9 +132,9 @@ export default class RectTransition {
 // const stylesEnd = { x: 100, y: 200, scale: 1.2, opacity: 0 };
 // // => { transform: translate(0, 0) scale(1), opacity: 0}
 //
-// // frames - набор ключевых кадров с параметрами времени и интерполяции
+// frames - набор ключевых кадров с параметрами времени и интерполяции
 // function getTimeLine(frames) {
-//   // ...
+  // подразумевается автоматическое выполнение тех самых tween цепочек
 // }
 // const nextFrameByTime = getTimeLine([
 //   { x: 0, y: 0, time: 200, interpolation: 'ease' },
@@ -159,13 +149,23 @@ export default class RectTransition {
 // nextFrameByTime(1000); // => {x: 400, y: 500} // конечная точка
 //
 // // => { transform: translate(0, 0) scale(1), opacity: 1}
+
+// const startPosition = '0px';
+// const endPosition = '100px';
+//
+// console.log(startPosition);
+// console.log(endPosition);
+
 // const keyframe0 = { x: 0, y: 0 };
 // const keyframe1 = { x: 100, y: 200 };
 // const timeBetween = 300;
+// const interpolation = 'ease-in-out';
+
 // // => { transform: translate(0, 0) scale(1), opacity: 0}
 // console.log(keyframe0);
 // console.log(keyframe1);
 // console.log(timeBetween);
+// console.log(interpolation);
 //
 // console.log(stylesStart);
 // console.log(stylesEnd);
@@ -199,6 +199,8 @@ export default class RectTransition {
 //     opacity: 0,
 //   },
 // };
+//
+// console.log(myKeyFrames);
 
 // 2 - вариант задания ключевых кадров с
 // привязкой к прогрессу
@@ -263,3 +265,94 @@ export default class RectTransition {
 // function getAnimationTimeLine(keyframes) {
 //   // ...
 // }
+
+// const elementNode = document.getElementById('nodeToAnimate');
+//
+// function animateTween(animatedNode, startParameters, endParameters, duration, interpolation, endAnimationCallback) {
+//   // реализация
+// }
+// const actualAnimatedParameters = { x: 0, y: 0 };
+// // animateTween - не pure function
+// animateTween(elementNode, actualAnimatedParameters, { x: 400, y: 0 }, 100, 'ease', nextPositions1 =>
+//   animateTween(elementNode, nextPositions1, { x: 400, y: 400 }, 100, 'easeInOut', nextPositions2 =>
+//     animateTween(elementNode, nextPositions2, { x: 0, y: 400 }, 100, 'linear', nextPositions3 =>
+//       animateTween(elementNode, nextPositions3, { x: 0, y: 0 }, 100, 'easeIn'),
+//     ),
+//   ),
+// );
+//
+//
+// const circle = document.getElementById("rectangularId");
+// let x = 0;
+// let y = 0;
+// let forwardX = true;
+//
+// function startAnimationMovingAroundRect() {
+//   if (x < 400 && forwardX) {
+//     x += 2;
+//   } else if (x > 0 && y < 200) {
+//     y += 2;
+//     forwardX = false;
+//   } else if (x > 0 && y > 0) {
+//     x -= 2;
+//   } else if (x === 0 && y > 0) {
+//     y -= 2;
+//   } else {
+//     forwardX = true;
+//     y = 0;
+//     x = 0;
+//   }
+//   requestAnimationFrame(startAnimationMovingAroundRect);
+//   circle.style.transform = `translate(${x}px, ${y}px)`;
+// }
+//
+//
+// startAnimationMovingAroundRect();
+
+// function getTimeLine() {
+// //  ...реализация
+//   return {
+//     renderAnimationFrame: () => null
+//   }
+// }
+//
+// function calcViewPortHeight() {
+//
+// }
+//
+// const myTimeline = getTimeLine([
+//   { x: 0, y: 0, time: 200, interpolation: 'ease' },
+//   { x: 100, y: 200, time: 300, interpolation: 'linear' },
+//   { x: 400, y: 500, time: 400, interpolation: 'ease-in-out' },
+// ]);
+//
+//
+// const rootScrollContainer = document.getElementById('firstLandingSectionId');
+//
+// function calcSectionProgress() {
+//   // вычисление прогресса, когда мы находимся внутри scroll-контейнера
+//   const { top, bottom } = rootScrollContainer.getBoundingClientRect();
+//   const insideSectionProgress = (-1 * top) / rootScrollContainer.clientHeight;
+//   // вычисление до и после пролистывания секции (можно считать как один пролистанный экран за 100%)
+//   // это ваш выбор реализации, я выбрал именно такой подход
+//   if (insideSectionProgress > 1) {
+//     return 1 + (-1 * bottom) / calcViewPortHeight();
+//   }
+//   if (insideSectionProgress < 0) {
+//     return -1*top / calcViewPortHeight();
+//   }
+//   return insideSectionProgress;
+// }
+//
+// const currentProgress = calcSectionProgress();
+//
+// myTimeline.renderAnimationFrame(currentProgress);
+//
+// const myTimeline = getTimeLine([
+//   { x: 0, y: 0, time: 1, interpolation: 'ease' },
+//   { x: 100, y: 200, time: 1, interpolation: 'linear' },
+//   { x: 400, y: 500, time: 1, interpolation: 'ease-in-out' },
+//   { x: 400, y: 500, time: 1, interpolation: 'ease-in-out' },
+//   { x: 400, y: 500, time: 1, interpolation: 'ease-in-out' },
+//   { x: 400, y: 500, time: 1, interpolation: 'ease-in-out' },
+// ]);
