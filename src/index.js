@@ -1,6 +1,6 @@
 import { NodeAnimator, Separator, withWrapper, withTitleWrapperView } from './components';
 import 'typeface-open-sans/index.css';
-import 'tween/tween';
+// import 'tween/tween';
 import './styles/global.scss';
 import styles from './styles.scss';
 
