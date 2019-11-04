@@ -20,7 +20,7 @@ const initApp = () => {
     rect.setParentNode(borderedWrapper);
     const rectWithTitleNode = withTitleWrapperView({
       title: 'Пример 1: цель - переместить элемент при наведении на блок слева направо',
-      subtitle: 'Используем transition property и указываем анимируемое свойство "transform"',
+      subtitle: 'CSS transition',
     })(borderedWrapper);
 
     rootContainer.appendChild(rectWithTitleNode);
@@ -39,7 +39,7 @@ const initApp = () => {
     rect.setParentNode(borderedWrapper);
     const rectWithTitleNode = withTitleWrapperView({
       title: 'Пример 2: цель - изменять различные параметры стилей элемента по ключевым кадрам',
-      subtitle: 'Используем css animation property и задаём keyframes',
+      subtitle: 'CSS keyframes',
     })(borderedWrapper);
 
     rootContainer.appendChild(rectWithTitleNode);
@@ -59,7 +59,7 @@ const initApp = () => {
     const rectWithTitleNode = withTitleWrapperView({
       title: 'Пример 3: цель - переместить элемент слева направо и обратно с использованием JS и transitionend',
       subtitle:
-        'Добавляем слушатель на событие transitionend и проверяя количество срабатываний этого callback изменяем направление движения',
+        'transitionend events',
     })(borderedWrapper);
 
     rootContainer.appendChild(rectWithTitleNode);
@@ -81,7 +81,7 @@ const initApp = () => {
       title:
         'Пример 4: цель - переместить элемент слева направо и обратно, но с использованием двух таймеров c задержкой',
       subtitle:
-        'Используем два setTimeout browser callbacks, чтобы изменить направления движения и установить окончание анимации, стараемся точно синхронизировать скорость CSS анимации и браузерных таймеров',
+        'setTimeout sequence (callbacks)',
     })(borderedWrapper);
 
     rootContainer.appendChild(rectWithTitleNode);
@@ -102,7 +102,7 @@ const initApp = () => {
     const rectWithTitleNode = withTitleWrapperView({
       title: 'Пример 5: цель - переместить элемент слева направо используя цикл перерисовок через setTimeout',
       subtitle:
-        'Создаём бесконечную петлю с помощью setTimeout\nПланируем событие и выполняем его..',
+        'loop via setTimeouts',
     })(borderedWrapper);
 
     rootContainer.appendChild(rectWithTitleNode);
@@ -122,7 +122,7 @@ const initApp = () => {
     const rectWithTitleNode = withTitleWrapperView({
       title: 'Пример 6: цель - переместить элемент слева направо используя цикл вызовов через requestAnimationFrame',
       subtitle:
-        'Создаём бесконечную петлю с помощью requestAnimationFrame\nВызываем перерисовку каждый раз, когда браузер может её обеспечить',
+        'loop via requestAnimationFrame',
     })(borderedWrapper);
 
     rootContainer.appendChild(rectWithTitleNode);
@@ -152,7 +152,7 @@ const initApp = () => {
     const rectWithTitleNode = withTitleWrapperView({
       title: 'Сравнение работы setTimeout и requestAnimationFrame',
       subtitle:
-        'Сверху - loop при помощи setTimeout\nСнизу - loop при помощи requestAnimationFrame\n(разница хорошо заметна на низкой производительности)',
+        'Top - loop via setTimeout\nBottom - loop via requestAnimationFrame\n',
     })(borderedWrapper);
 
     rootContainer.appendChild(rectWithTitleNode);

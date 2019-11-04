@@ -309,10 +309,10 @@ export default class NodeAnimator {
 //
 // startAnimationMovingAroundRect();
 
-// function getTimeLine() {
+// function controlledTimeLine() {
 // //  ...реализация
 //   return {
-//     renderAnimationFrame: () => null
+//     renderAnimationTickByProgress: () => null
 //   }
 // }
 //
@@ -320,19 +320,29 @@ export default class NodeAnimator {
 //
 // }
 //
-// const myTimeline = getTimeLine([
+//
+// const animatedElement = null;
+// const currentStyles = null;
+//
+// const myTimeline = controlledTimeLine(animatedElement, currentStyles)([
 //   { x: 0, y: 0, time: 200, interpolation: 'ease' },
 //   { x: 100, y: 200, time: 300, interpolation: 'linear' },
 //   { x: 400, y: 500, time: 400, interpolation: 'ease-in-out' },
 // ]);
 //
+// myTimeline.renderAnimationTickByProgress(10); // отрисовка анимации на момент 10% прогресса выполнения
+// myTimeline.renderAnimationTickByProgress(55); // отрисовка анимации на момент 55% прогресса выполнения
+// myTimeline.renderAnimationTickByProgress(100); // отрисовка завершения анимации (последний ключевой кадр)
+
+// console.log(myTimeline);
+//
 //
 // const rootScrollContainer = document.getElementById('firstLandingSectionId');
-//
+
 // function calcSectionProgress() {
 //   // вычисление прогресса, когда мы находимся внутри scroll-контейнера
-//   const { top, bottom } = rootScrollContainer.getBoundingClientRect();
-//   const insideSectionProgress = (-1 * top) / rootScrollContainer.clientHeight;
+//   const { top, bottom, height } = rootScrollContainer.getBoundingClientRect();
+//   const insideSectionProgress = (-1 * top) / height;
 //   // вычисление до и после пролистывания секции (можно считать как один пролистанный экран за 100%)
 //   // это ваш выбор реализации, я выбрал именно такой подход
 //   if (insideSectionProgress > 1) {
@@ -346,7 +356,8 @@ export default class NodeAnimator {
 //
 // const currentProgress = calcSectionProgress();
 //
-// myTimeline.renderAnimationFrame(currentProgress);
+// myTimeline.renderAnimationTickByProgress(currentProgress);
+
 //
 // const myTimeline = getTimeLine([
 //   { x: 0, y: 0, time: 1, interpolation: 'ease' },
@@ -356,3 +367,31 @@ export default class NodeAnimator {
 //   { x: 400, y: 500, time: 1, interpolation: 'ease-in-out' },
 //   { x: 400, y: 500, time: 1, interpolation: 'ease-in-out' },
 // ]);
+
+// const redSection = document.getElementById('redSection');
+//
+// const { top: sectionTop, height: containerHeight } = redSection.getBoundingClientRect();
+// const progress = (-1 * sectionTop) / containerHeight;
+//
+// console.log(progress);
+//
+// function getCurrentSectionProgress() {
+//
+// }
+//
+// function setAnimationActive() {
+//
+// }
+//
+// const triggerSectionProgress = 50;
+//
+// const watchTrigger = () => {
+//   const sectionProgress = getCurrentSectionProgress();
+//   if (sectionProgress >= triggerSectionProgress) {
+//     setAnimationActive(true)
+//   } else {
+//     setAnimationActive(false)
+//   }
+// };
+//
+// watchTrigger()
