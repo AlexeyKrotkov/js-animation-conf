@@ -53,6 +53,7 @@ export default class NodeAnimator {
   };
 
   // example 5
+
   tick = () => {
     this.xPosition += 2;
     this.rectNode.style.transform = `translateX(${this.xPosition}px)`;
@@ -64,15 +65,17 @@ export default class NodeAnimator {
     clearTimeout(this.timerId);
     this.xPosition = 0;
     this.rectNode.style.transform = `translateX(0)`;
-    setTimeout(this.tick, 0);
+    this.tick();
   };
+
   runAnimationsViaSetTimeoutLoop() {
     this.props.parentNode.addEventListener('mouseenter', this.animate);
   }
 
   // example 6
+
   tick2 = () => {
-    this.xPosition += 4;
+    this.xPosition += 2;
     this.rectNode.style.transform = `translateX(${this.xPosition}px)`;
     if (this.xPosition <= 500 - this.rectNode.getBoundingClientRect().width) {
       this.rafId = requestAnimationFrame(this.tick2);
@@ -84,6 +87,7 @@ export default class NodeAnimator {
     this.rectNode.style.transform = `translateX(0)`;
     requestAnimationFrame(this.tick2);
   };
+
   runAnimationsViaRafLoop() {
     this.props.parentNode.addEventListener('mouseenter', this.animate2);
   }
@@ -133,14 +137,16 @@ export default class NodeAnimator {
 // // => { transform: translate(0, 0) scale(1), opacity: 0}
 //
 // frames - набор ключевых кадров с параметрами времени и интерполяции
+//
 // function getTimeLine(frames) {
-  // подразумевается автоматическое выполнение тех самых tween цепочек
+//   // ...
 // }
 // const nextFrameByTime = getTimeLine([
 //   { x: 0, y: 0, time: 200, interpolation: 'ease' },
 //   { x: 100, y: 200, time: 300, interpolation: 'linear' },
 //   { x: 400, y: 500, time: 400, interpolation: 'ease-in-out' },
 // ]);
+//
 // // общее время прохождения timeline = 900 ms
 //
 //
@@ -265,7 +271,7 @@ export default class NodeAnimator {
 // function getAnimationTimeLine(keyframes) {
 //   // ...
 // }
-
+//
 // const elementNode = document.getElementById('nodeToAnimate');
 //
 // function animateTween(animatedNode, startParameters, endParameters, duration, interpolation, endAnimationCallback) {
@@ -306,11 +312,12 @@ export default class NodeAnimator {
 //   circle.style.transform = `translate(${x}px, ${y}px)`;
 // }
 //
+
 //
 // startAnimationMovingAroundRect();
 
 // function controlledTimeLine() {
-// //  ...реализация
+//  ...реализация
 //   return {
 //     renderAnimationTickByProgress: () => null
 //   }
@@ -330,21 +337,18 @@ export default class NodeAnimator {
 //   { x: 400, y: 500, time: 400, interpolation: 'ease-in-out' },
 // ]);
 //
-// myTimeline.renderAnimationTickByProgress(10); // отрисовка анимации на момент 10% прогресса выполнения
-// myTimeline.renderAnimationTickByProgress(55); // отрисовка анимации на момент 55% прогресса выполнения
-// myTimeline.renderAnimationTickByProgress(100); // отрисовка завершения анимации (последний ключевой кадр)
-
+// myTimeline.renderAnimationTickByProgress(10);
+// myTimeline.renderAnimationTickByProgress(55);
+// myTimeline.renderAnimationTickByProgress(100);
+//
 // console.log(myTimeline);
-//
-//
+// //
+// //
 // const rootScrollContainer = document.getElementById('firstLandingSectionId');
-
+//
 // function calcSectionProgress() {
-//   // вычисление прогресса, когда мы находимся внутри scroll-контейнера
 //   const { top, bottom, height } = rootScrollContainer.getBoundingClientRect();
 //   const insideSectionProgress = (-1 * top) / height;
-//   // вычисление до и после пролистывания секции (можно считать как один пролистанный экран за 100%)
-//   // это ваш выбор реализации, я выбрал именно такой подход
 //   if (insideSectionProgress > 1) {
 //     return 1 + (-1 * bottom) / calcViewPortHeight();
 //   }
@@ -362,9 +366,6 @@ export default class NodeAnimator {
 // const myTimeline = getTimeLine([
 //   { x: 0, y: 0, time: 1, interpolation: 'ease' },
 //   { x: 100, y: 200, time: 1, interpolation: 'linear' },
-//   { x: 400, y: 500, time: 1, interpolation: 'ease-in-out' },
-//   { x: 400, y: 500, time: 1, interpolation: 'ease-in-out' },
-//   { x: 400, y: 500, time: 1, interpolation: 'ease-in-out' },
 //   { x: 400, y: 500, time: 1, interpolation: 'ease-in-out' },
 // ]);
 
