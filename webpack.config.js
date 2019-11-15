@@ -1,9 +1,7 @@
 const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const webpack = require('webpack');
 const CircularDependencyPlugin = require('circular-dependency-plugin');
-const browsersList = require('browserslist');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 const isProduction = process.env.NODE_ENV !== 'development'; // either production or server
@@ -91,18 +89,8 @@ module.exports = (env, argv) => ({
       failOnError: true,
     }),
     new HtmlWebpackPlugin({
-      title: 'Webpack 4 Starter',
       template: './src/index.html',
-      inject: true,
-      minify: {
-        removeComments: true,
-        collapseWhitespace: false,
-      },
-    }),
-    new webpack.DefinePlugin({
-      'process.env': {
-        SUPPORTED_BROWSERS: `'${browsersList(['> 0.5%', 'last 2 versions', 'not dead']).join('|')}'`,
-      },
+      favicon: './src/favicon.ico',
     }),
     new MiniCssExtractPlugin({ filename: '[name]-[contenthash:8].css' }),
     ...(!isProduction ? [new BundleAnalyzerPlugin({ analyzerPort: 7001, openAnalyzer: false })] : []),
